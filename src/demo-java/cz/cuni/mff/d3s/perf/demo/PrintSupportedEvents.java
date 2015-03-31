@@ -1,6 +1,6 @@
 /*
- * Copyright 2014 Charles University in Prague
- * Copyright 2014 Vojtech Horky
+ * Copyright 2015 Charles University in Prague
+ * Copyright 2015 Vojtech Horky
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package cz.cuni.mff.d3s.perf;
+package cz.cuni.mff.d3s.perf.demo;
 
 import java.util.Collection;
 
-public final class Benchmark {
-	public static native Collection<String> getSupportedEvents();
-	public static native void init(final int measurements, final String[] events);
-	public static native void start();
-	public static native void stop();
-	public static native void reset();
-	public static native BenchmarkResults getResults();
+import cz.cuni.mff.d3s.perf.Benchmark;
+
+public class PrintSupportedEvents {
+	
+	public static void main(String args[]) {
+		Collection<String> allEvents = Benchmark.getSupportedEvents();
+		for (String event : allEvents) {
+			System.out.println(event);
+		}
+	}
 }

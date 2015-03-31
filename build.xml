@@ -451,6 +451,24 @@
 	</target>
 	
 	
+	<target name="print-supported-events"
+		depends="compile,compile-demo"
+		description="Print recognized events."
+		>
+		<java
+				classname="cz.cuni.mff.d3s.perf.demo.PrintSupportedEvents"
+				fork="true"
+				failonerror="true">
+			<classpath>
+				<pathelement path="${classes.build.dir}" />
+				<pathelement path="${demo.classes.build.dir}" />
+			</classpath>
+			<jvmarg value="-agentpath:${agent.path}" />
+			<arg value="build.xml" />
+		</java>
+	</target>
+
+	
 	<target name="demo"
 		depends="compile,compile-demo"
 		description="Run simple demo (measure md5 speed)."

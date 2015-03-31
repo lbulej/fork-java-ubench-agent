@@ -74,6 +74,38 @@ jint ubench_benchmark_init(void) {
 }
 
 
+jobject JNICALL Java_cz_cuni_mff_d3s_perf_Benchmark_getSupportedEvents(
+		JNIEnv *env, jclass UNUSED_PARAMETER(klass)) {
+	jclass list_class = (*env)->FindClass(env, "java/util/ArrayList");
+	if (list_class == NULL) {
+		return NULL;
+	}
+	jmethodID constructor = (*env)->GetMethodID(env, list_class, "<init>", "()V");
+	if (constructor == NULL) {
+		return NULL;
+	}
+
+	jobject jevent_list = (*env)->NewObject(env, list_class, constructor);
+	if (jevent_list == NULL) {
+		return NULL;
+	}
+
+	jmethodID add_method = (*env)->GetMethodID(env, list_class, "add", "(Ljava/lang/Object;)Z");
+	if (add_method == NULL) {
+		return NULL;
+	}
+
+	(*env)->CallBooleanMethod(env, jevent_list, add_method,
+		(*env)->NewStringUTF(env, "SYS_WALLCLOCK"));
+	(*env)->CallBooleanMethod(env, jevent_list, add_method,
+		(*env)->NewStringUTF(env, "JVM_COMPILATIONS"));
+
+	// TODO: PAPI, getrusage()-related
+
+	return jevent_list;
+}
+
+
 void JNICALL Java_cz_cuni_mff_d3s_perf_Benchmark_init(
 		JNIEnv *env, jclass UNUSED_PARAMETER(klass),
 		jint jmeasurements, jobjectArray jeventNames) {
