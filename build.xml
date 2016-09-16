@@ -480,6 +480,23 @@
 				
 		<echo level="info" message="All tests passed." />
 	</target>
+
+	<target name="test-context"
+			depends="compile,compile-test"
+			description="Run simple self-tests (obsoleted)."
+		>
+		<self-test
+			classname="cz.cuni.mff.d3s.perf.MultiContextCompilationCounterTest"
+			jvmarg="-Xmixed"
+			progarg="mixed" />
+		<self-test
+			classname="cz.cuni.mff.d3s.perf.MultiContextCompilationCounterTest"
+			jvmarg="-Xint"
+			progarg="int" />
+		<self-test
+			classname="cz.cuni.mff.d3s.perf.MultiContextBenchmarkTest"
+			/>
+	</target>
 	
 	<target name="test-junit"
 			depends="compile,compile-test"
@@ -518,13 +535,29 @@
 		</junitreport>
 	</target>
 	
-	
 	<target name="demo"
 		depends="compile,compile-demo"
 		description="Run simple demo (measure md5 speed)."
 		>
 		<java
 				classname="cz.cuni.mff.d3s.perf.demo.MeasureHashing"
+				fork="true"
+				failonerror="true">
+			<classpath>
+				<pathelement path="${classes.build.dir}" />
+				<pathelement path="${demo.classes.build.dir}" />
+			</classpath>
+			<jvmarg value="-agentpath:${agent.path}" />
+			<arg value="build.xml" />
+		</java>
+	</target>
+	
+	<target name="demo-context"
+		depends="compile,compile-demo"
+		description="Run simple demo (measure md5 speed)."
+		>
+		<java
+				classname="cz.cuni.mff.d3s.perf.demo.MultiContextMeasureHashing"
 				fork="true"
 				failonerror="true">
 			<classpath>
