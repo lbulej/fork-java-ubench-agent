@@ -304,6 +304,7 @@
 				classpath="${classes.build.dir}">
 			<class name="cz.cuni.mff.d3s.perf.CompilationCounter" />
 			<class name="cz.cuni.mff.d3s.perf.Benchmark" />
+			<class name="cz.cuni.mff.d3s.perf.MultiContextBenchmark" />
 			<class name="cz.cuni.mff.d3s.perf.OverheadEstimations" />
 		</javah>
 	</target>
