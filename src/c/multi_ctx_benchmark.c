@@ -66,6 +66,7 @@ jint papi_init(void) {
 	return JNI_OK;
 }
 
+int eventInited = 0;
 
 jlong JNICALL Java_cz_cuni_mff_d3s_perf_MultiContextBenchmark_init(
 		JNIEnv *env, jclass UNUSED_PARAMETER(klass),
@@ -189,11 +190,14 @@ event_loop_end:
 			}
 		}
 
-		for (i = 0; i < current_benchmark->used_papi_events_count; i++) {
-			rc = PAPI_add_event(current_benchmark->papi_eventset,
-					current_benchmark->used_papi_events[i]);
-			assert(rc == PAPI_OK);
-		}
+        if(!eventInited) {
+		    for (i = 0; i < current_benchmark->used_papi_events_count; i++) {
+			    rc = PAPI_add_event(current_benchmark->papi_eventset,
+				    	current_benchmark->used_papi_events[i]);
+			    assert(rc == PAPI_OK);
+		    }
+            eventInited = 1;
+        }
 
 	}
 #endif
